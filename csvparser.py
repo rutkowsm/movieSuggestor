@@ -1,3 +1,7 @@
+"""
+Skrypt parsujący dane z formatu csv do pliku json
+"""
+
 import csv
 import json
 
