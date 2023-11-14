@@ -14,7 +14,7 @@ def load_data(json_file):
 def euclidean_distance(user1, user2, data):
     common_movies = set(data[user1]).intersection(set(data[user2]))
     if not common_movies:
-        return float('inf')  # Return infinity if no movies in common
+        return 0  # Return 0 if no movies in common
     ratings1 = np.array([data[user1][movie] for movie in common_movies])
     ratings2 = np.array([data[user2][movie] for movie in common_movies])
     return np.linalg.norm(ratings1 - ratings2)
@@ -57,7 +57,7 @@ def recommend_movies(target_user, data, num_recommendations=5):
     for similar_user, _ in similar_users:
         for movie, rating in data[similar_user].items():
             if movie not in data[target_user]:  # Target user hasn't seen/rated it
-                if rating >= 8:  # Assuming 8 is the threshold for a high rating
+                if rating >= 7:  # Assuming 7 is the threshold for a high rating
                     recommended_movies[movie] = recommended_movies.get(movie, 0) + rating
                 else:  # Low-rated movies by similar users
                     not_recommended_movies[movie] = not_recommended_movies.get(movie, 0) + rating
@@ -106,7 +106,7 @@ def display_similarities(target_user, data):
 
 
 def main(json_data, target_user):
-    print(f"Finding similar and dissimilar users for {target_user}...\n")
+    print(f"Finding similar and unsimilar users for {target_user}...\n")
     display_similarities(target_user, json_data)
 
     recommended, not_recommended = recommend_movies(target_user, json_data)
